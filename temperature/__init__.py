@@ -7,15 +7,15 @@ def exists():
 
 @check50.check(exists)
 def converts_10c():
-    """converts 10°C to 50.0°F"""
-    check50.run("python3 temperature.py").stdin("10").stdout("50.0").exit(0)
+    """input of 10 yields output of 50.0"""
+    check50.run("python3 temperature.py").stdin("10", prompt=False).stdout("50.0\n", regex=False).exit(0)
 
 @check50.check(exists)
 def converts_negative():
-    """converts -40°C to -40.0°F"""
-    check50.run("python3 temperature.py").stdin("-40").stdout("-40.0").exit(0)
+    """input of -40 yields output of -40.0"""
+    check50.run("python3 temperature.py").stdin("-40", prompt=False).stdout("-40.0\n", regex=False).exit(0)
 
 @check50.check(exists)
 def converts_zero():
-    """converts 0°C to 32.0°F"""
-    check50.run("python3 temperature.py").stdin("0").stdout("32.0").exit(0)
+    """input of 0 yields output of 32.0"""
+    check50.run("python3 temperature.py").stdin("0", prompt=False).stdout("32.0\n", regex=False).exit(0)
