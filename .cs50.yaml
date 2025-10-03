@@ -1,0 +1,6 @@
+check50:
+  checks:
+    temperature: temperature
+    eggs: eggs
+    checkout: checkout
+    punch: punch
