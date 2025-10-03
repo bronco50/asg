@@ -1,3 +1,8 @@
+submit50:
+  files: &submit50_files
+    - !exclude "*"
+    - !require temperature.py
+  style: false
+
 check50:
-  checks:
-    temperature: temperature
+  files: *submit50_files
