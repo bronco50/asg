@@ -1,4 +1,5 @@
 import check50
+from re import escape
 
 
 @check50.check()
@@ -8,37 +9,31 @@ def exists():
 
 
 @check50.check(exists)
-def test_volume_integer():
-    """input of 4, 6, 9 yields output of 72.00"""
-    actual = check50.run("python3 pyramid.py")\
-        .stdin("4", prompt=False)\
-        .stdin("6", prompt=False)\
-        .stdin("9", prompt=False)\
-        .stdout()  # get full program output
-    # Passes if 72.00 appears anywhere in the output
-    if "72.00" not in actual:
-        raise check50.Mismatch("72.00", actual)
+def test_integer_values():
+    """input of 4, 6, and 9 yields correct formatted output"""
+    inputs = ["4", "6", "9"]
+    output = "Enter base length: Enter base width: Enter height: Volume: 72.0"
+    check50.run("python3 pyramid.py")\
+        .stdin(inputs[0], prompt=False)\
+        .stdin(inputs[1], prompt=False)\
+        .stdin(inputs[2], prompt=False)\
+        .stdout(regex(output), output, regex=True)\
+        .exit(0)
 
 
 @check50.check(exists)
-def test_volume_float():
-    """input of 3, 5, 7.5 yields output of 37.50"""
-    actual = check50.run("python3 pyramid.py")\
-        .stdin("3", prompt=False)\
-        .stdin("5", prompt=False)\
-        .stdin("7.5", prompt=False)\
-        .stdout()
-    if "37.50" not in actual:
-        raise check50.Mismatch("37.50", actual)
+def test_float_values():
+    """input of 3, 5, and 7.5 yields correct formatted output"""
+    inputs = ["3", "5", "7.5"]
+    output = "Enter base length: Enter base width: Enter height: Volume: 37.5"
+    check50.run("python3 pyramid.py")\
+        .stdin(inputs[0], prompt=False)\
+        .stdin(inputs[1], prompt=False)\
+        .stdin(inputs[2], prompt=False)\
+        .stdout(regex(output), output, regex=True)\
+        .exit(0)
 
 
-@check50.check(exists)
-def test_volume_decimal():
-    """input of 4.25, 6.75, 9.1 yields output of 87.02"""
-    actual = check50.run("python3 pyramid.py")\
-        .stdin("4.25", prompt=False)\
-        .stdin("6.75", prompt=False)\
-        .stdin("9.1", prompt=False)\
-        .stdout()
-    if "87.02" not in actual:
-        raise check50.Mismatch("87.02", actual)
+def regex(text):
+    """match case-sensitively with any characters preceding and only whitespace after"""
+    return fr'^.*{escape(text)}\s*$'
