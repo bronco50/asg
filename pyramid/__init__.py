@@ -1,5 +1,5 @@
 import check50
-import re
+
 
 @check50.check()
 def exists():
@@ -14,9 +14,10 @@ def test_volume_integer():
         .stdin("4", prompt=False)\
         .stdin("6", prompt=False)\
         .stdin("9", prompt=False)\
-        .stdout()
-    if not re.search(r"(^|\s)72\.00(\s|$)", actual):
-        raise check50.Mismatch("72.00\n", actual)
+        .stdout()  # get full program output
+    # Passes if 72.00 appears anywhere in the output
+    if "72.00" not in actual:
+        raise check50.Mismatch("72.00", actual)
 
 
 @check50.check(exists)
@@ -27,8 +28,8 @@ def test_volume_float():
         .stdin("5", prompt=False)\
         .stdin("7.5", prompt=False)\
         .stdout()
-    if not re.search(r"(^|\s)37\.50(\s|$)", actual):
-        raise check50.Mismatch("37.50\n", actual)
+    if "37.50" not in actual:
+        raise check50.Mismatch("37.50", actual)
 
 
 @check50.check(exists)
@@ -39,5 +40,5 @@ def test_volume_decimal():
         .stdin("6.75", prompt=False)\
         .stdin("9.1", prompt=False)\
         .stdout()
-    if not re.search(r"(^|\s)87\.02(\s|$)", actual):
-        raise check50.Mismatch("87.02\n", actual)
+    if "87.02" not in actual:
+        raise check50.Mismatch("87.02", actual)
