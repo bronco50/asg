@@ -13,7 +13,7 @@ def test_volume_integer():
         .stdin("4", prompt=False)\
         .stdin("6", prompt=False)\
         .stdin("9", prompt=False)\
-        .stdout(r"Volume:\s*72\.00", regex=True)\
+        .stdout("72.00\n", regex=False)\
         .exit(0)
 
 
@@ -24,7 +24,7 @@ def test_volume_float():
         .stdin("3", prompt=False)\
         .stdin("5", prompt=False)\
         .stdin("7.5", prompt=False)\
-        .stdout(r"Volume:\s*37\.50", regex=True)\
+        .stdout("37.50\n", regex=False)\
         .exit(0)
 
 
@@ -35,5 +35,5 @@ def test_volume_decimal():
         .stdin("4.25", prompt=False)\
         .stdin("6.75", prompt=False)\
         .stdin("9.1", prompt=False)\
-        .stdout(r"Volume:\s*87\.02", regex=True)\
+        .stdout("87.02\n", regex=False)\
         .exit(0)
