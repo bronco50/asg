@@ -5,13 +5,6 @@ def exists():
     """pyramid.py exists"""
     check50.exists("pyramid.py")
 
-@check50.check(exists)
-import check50
-
-@check50.check()
-def exists():
-    """pyramid.py exists"""
-    check50.exists("pyramid.py")
 
 @check50.check(exists)
 def test_volume_integer():
@@ -23,6 +16,7 @@ def test_volume_integer():
         .stdout("Volume: 72.00\n", regex=False)\
         .exit(0)
 
+
 @check50.check(exists)
 def test_volume_float():
     """input of 3, 5, 7.5 yields output of 37.50"""
@@ -33,13 +27,13 @@ def test_volume_float():
         .stdout("Volume: 37.50\n", regex=False)\
         .exit(0)
 
+
 @check50.check(exists)
 def test_volume_decimal():
-    """input of 4.25, 6.75, 9.1 yields output of 86.84"""
+    """input of 4.25, 6.75, 9.1 yields output of 87.02"""
     check50.run("python3 pyramid.py")\
         .stdin("4.25", prompt=False)\
         .stdin("6.75", prompt=False)\
         .stdin("9.1", prompt=False)\
         .stdout("Volume: 87.02\n", regex=False)\
         .exit(0)
-
