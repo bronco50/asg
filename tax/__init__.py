@@ -1,3 +1,5 @@
+import check50
+
 @check50.check(exists)
 def test_whole_dollar():
     """input of $12.00 yields output of Sales tax: $1.23"""
