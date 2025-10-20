@@ -9,8 +9,7 @@ def exists():
 
 @check50.check(exists)
 def test_benny_bronco():
-    """
-    input of Benny Bronco yields correctly sized badge
+    """input of Benny Bronco yields correctly sized badge
     +-------------+
     |Bronco, Benny|
     +-------------+
@@ -56,7 +55,7 @@ def test_benny_bronco():
         raise check50.Mismatch(
             expected_top_bottom,
             f"{top}\n{bottom}",
-            help="Your top and bottom borders must use '+' and '-' and match the exact length of the full name.",
+            help="Your top and bottom borders must use '+' and '-' and match the exact length of the full name.\nTry using len() and * to duplicate the -",
         )
 
     # ---------- Check 4: Proper alignment with borders ----------
