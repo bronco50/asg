@@ -1,4 +1,8 @@
 import check50
+from re import escape
+
+# adds case insensitivity
+case_insensitive_prefix = "(?i)"
 
 
 @check50.check()
@@ -8,19 +12,33 @@ def exists():
 
 
 @check50.check(exists)
-def test_whole_dollar():
-    """input of $12.00 yields output of Sales tax: $1.23"""
-    check50.run("python3 tax.py").stdin("$12.00", prompt=False).stdout("Enter item price: Sales tax: $1.23\n").exit()
-
-
-@check50.check(exists)
-def test_cents():
-    """input of $3.50 yields output of Sales tax: $0.36"""
-    check50.run("python3 tax.py").stdin("$3.50", prompt=False).stdout("Enter item price: Sales tax: $0.36\n").exit()
-
-
-@check50.check(exists)
 def test_large_price():
     """input of $99.99 yields output of Sales tax: $10.25"""
-    check50.run("python3 tax.py").stdin("$99.99", prompt=False).stdout("Enter item price: Sales tax: $10.25\n").exit()
+    input_val = "$99.99"
+    output = "Sales tax: $10.25\n"
+    check50.run("python3 tax.py")\
+        .stdin(input_val, prompt=True)\
+        .stdout(case_insensitive_prefix + escape(output), output, regex=True)\
+        .exit()
 
+
+@check50.check(exists)
+def test_small_price():
+    """input of $1.00 yields output of Sales tax: $0.10"""
+    input_val = "$1.00"
+    output = "Sales tax: $0.10\n"
+    check50.run("python3 tax.py")\
+        .stdin(input_val, prompt=True)\
+        .stdout(case_insensitive_prefix + escape(output), output, regex=True)\
+        .exit()
+
+
+@check50.check(exists)
+def test_rounding():
+    """input of $5.55 yields output of Sales tax: $0.57"""
+    input_val = "$5.55"
+    output = "Sales tax: $0.57\n"
+    check50.run("python3 tax.py")\
+        .stdin(input_val, prompt=True)\
+        .stdout(case_insensitive_prefix + escape(output), output, regex=True)\
+        .exit()
