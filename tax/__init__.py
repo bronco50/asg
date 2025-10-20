@@ -12,7 +12,7 @@ def exists():
 def test_whole_dollar():
     """input of $12.00 yields correct formatted output"""
     inputs = ["$12.00"]
-    output = "Enter item price: $12.00\nSales tax: $1.23\n"
+    output = "Enter item price: Sales tax: $1.23\n"
     check50.run("python3 tax.py")\
         .stdin(inputs[0], prompt=False)\
         .stdout(regex(output), output, regex=True)\
@@ -23,7 +23,7 @@ def test_whole_dollar():
 def test_cents():
     """input of $3.50 yields correct formatted output"""
     inputs = ["$3.50"]
-    output = "Enter item price: $3.50\nSales tax: $0.36\n"
+    output = "Enter item price: Sales tax: $0.36\n"
     check50.run("python3 tax.py")\
         .stdin(inputs[0], prompt=False)\
         .stdout(regex(output), output, regex=True)\
@@ -34,7 +34,7 @@ def test_cents():
 def test_large_price():
     """input of $99.99 yields correct formatted output"""
     inputs = ["$99.99"]
-    output = "Enter item price: $99.99\nSales tax: $10.25\n"
+    output = "Enter item price: Sales tax: $10.25\n"
     check50.run("python3 tax.py")\
         .stdin(inputs[0], prompt=False)\
         .stdout(regex(output), output, regex=True)\
@@ -45,7 +45,7 @@ def test_large_price():
 def test_small_price():
     """input of $1.00 yields correct formatted output"""
     inputs = ["$1.00"]
-    output = "Enter item price: $1.00\nSales tax: $0.10\n"
+    output = "Enter item price: Sales tax: $0.10\n"
     check50.run("python3 tax.py")\
         .stdin(inputs[0], prompt=False)\
         .stdout(regex(output), output, regex=True)\
@@ -56,7 +56,7 @@ def test_small_price():
 def test_rounding():
     """input of $5.55 yields correctly rounded formatted output"""
     inputs = ["$5.55"]
-    output = "Enter item price: $5.55\nSales tax: $0.57\n"
+    output = "Enter item price: Sales tax: $0.57\n"
     check50.run("python3 tax.py")\
         .stdin(inputs[0], prompt=False)\
         .stdout(regex(output), output, regex=True)\
