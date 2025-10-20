@@ -1,43 +1,41 @@
 import check50
-from re import escape
-
-# Adds case-insensitive matching
-case_insensitive_prefix = "(?i)"
+import re
 
 
 @check50.check()
 def exists():
-    """name_box.py exists"""
-    check50.exists("name_box.py")
+    """badge.py exists"""
+    check50.exists("badge.py")
 
 
 @check50.check(exists)
-def test_single_case():
-    """formats full name correctly for 'Ada Lovelace'"""
-    first = "Ada"
-    last = "Lovelace"
-
-    # Expected exact centered output
-    output = (
-        "+----------------+\n"
-        "|  Lovelace, Ada  |\n"
-        "+----------------+\n"
+def test_name_box():
+    """input of Geno Lewis yields correct centered box"""
+    expected = (
+        "+---------------+\n"
+        "|  Lewis, Geno  |\n"
+        "+---------------+\n"
     )
 
-    check50.run("python3 name_box.py")\
-        .stdin(first, prompt=True)\
-        .stdin(last, prompt=True)\
-        .stdout(case_insensitive_prefix + escape(output), output, regex=True)\
-        .exit()
+    actual = (
+        check50.run("python3 badge.py")
+        .stdin("Geno", prompt=True)
+        .stdin("Lewis", prompt=True)
+        .stdout()
+    )
 
+    # If output doesn't match exactly, decide which hint to show
+    if not re.search(re.escape(expected), actual):
+        help = None
 
-# --------------------------------------------------------------------
-# Hints (automatically shown when the check fails)
-# --------------------------------------------------------------------
-@check50.hint("Make sure to format the full name as '{last_name}, {first_name}' — include the comma and space.")
-@check50.hint("Center the full name within the box using .center(width).")
-@check50.hint("The width should be len(full_name) + 4 — two spaces and two borders.")
-@check50.hint("Top and bottom borders must use '+' and '-' and match the exact width.")
-@check50.hint("Do not add extra blank lines; your box should have exactly three lines.")
-def hints():
-    pass
+        # Common issues with box spacing and centering
+        if "," not in actual:
+            help = "Did you forget to include the comma and space in '{last}, {first}'?"
+        elif not re.search(r"\|\s+Lewis,\s+Geno\s+\|", actual):
+            help = "Are you centering the full name using .center(width)?"
+        elif not re.search(r"\+\-+\+", actual):
+            help = "Check your top and bottom borders — they should match the width of the name box."
+        elif "\n\n" in actual:
+            help = "It looks like you have extra blank lines — there should only be three lines."
+
+        raise check50.Mismatch(expected, actual, help=help)
