@@ -10,7 +10,7 @@ def exists():
 @check50.check(exists)
 def test_whole_dollar():
     """input of $12.00 yields output of Sales tax: $1.23"""
-    check50.run("python3 tax.py").stdin("$12.00", prompt=False).stdout("Sales tax: $1.23").exit()
+    check50.run("python3 tax.py").stdin("$12.00", prompt=False).stdout(""Enter item price: $12.00/nSales tax: $1.23").exit()
 
 
 @check50.check(exists)
