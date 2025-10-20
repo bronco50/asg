@@ -1,5 +1,5 @@
 import check50
-import importlib
+import importlib.util
 
 
 @check50.check()
@@ -11,7 +11,9 @@ def exists():
 @check50.check(exists)
 def test_calculate_pizzas():
     """calculate_pizzas returns correct tuple for 10 guests"""
-    reciept = importlib.import_module("reciept")
+    spec = importlib.util.spec_from_file_location("reciept", "reciept.py")
+    reciept = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(reciept)
 
     expected = (1, 1, 0)  # 1 large (feeds 7), 1 medium (feeds 3)
     actual = reciept.calculate_pizzas(10)
