@@ -1,5 +1,6 @@
 import check50
 
+
 @check50.check()
 def exists():
     """seasons.py exists"""
@@ -23,5 +24,12 @@ def test_seasons():
             if result.lower() == expected.lower():
                 help = "Make sure the output is in ALL CAPS."
             else:
-                help = f"Check that {month} correctly maps to {expected}."
+                if expected == "WINTER":
+                    help = "December, January, and February should print WINTER."
+                elif expected == "SPRING":
+                    help = "March, April, and May should print SPRING."
+                elif expected == "SUMMER":
+                    help = "June, July, and August should print SUMMER."
+                elif expected == "AUTUMN":
+                    help = "September, October, and November should print AUTUMN."
             raise check50.Mismatch(expected, result, help=help)
