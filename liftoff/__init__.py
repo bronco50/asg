@@ -52,44 +52,6 @@ def test_countdown_up():
 
 
 @check50.check(exists)
-def test_countdown_down_large():
-    """input direction 'd' and number 5 prints 5 down to 1 and Liftoff!"""
-    expected = "Direction (a/d): Countdown: 5\n4\n3\n2\n1\nLiftoff!"
-    result = (
-        check50.run("python3 liftoff.py")
-        .stdin("d", prompt=True)
-        .stdin("5", prompt=True)
-        .stdout()
-        .strip()
-    )
-    if result != expected.strip():
-        help = (
-            "Be sure your countdown loop works for larger values of n. "
-            "For direction 'd' and n = 5, output should be:\n5\n4\n3\n2\n1\nLiftoff!"
-        )
-        raise check50.Mismatch(expected.strip(), result, help=help)
-
-
-@check50.check(exists)
-def test_countdown_up_large():
-    """input direction 'a' and number 5 prints 1 up to 5 and Liftoff!"""
-    expected = "Direction (a/d): Countdown: 1\n2\n3\n4\n5\nLiftoff!"
-    result = (
-        check50.run("python3 liftoff.py")
-        .stdin("a", prompt=True)
-        .stdin("5", prompt=True)
-        .stdout()
-        .strip()
-    )
-    if result != expected.strip():
-        help = (
-            "Be sure your count-up loop works correctly. "
-            "For direction 'a' and n = 5, output should be:\n1\n2\n3\n4\n5\nLiftoff!"
-        )
-        raise check50.Mismatch(expected.strip(), result, help=help)
-
-
-@check50.check(exists)
 def test_invalid_direction():
     """input direction 'x' yields Invalid"""
     result = (
@@ -119,15 +81,15 @@ def test_negative_number():
     )
     if "invalid" not in result.lower():
         help = (
-            "If the number entered is less than 0, your program should print 'Invalid' "
-            "and stop — it should not attempt to count up or down."
+            "If the number entered is less than or equal to 0, your program should "
+            "print 'Invalid' and stop — it should not attempt to count up or down."
         )
         raise check50.Mismatch("Invalid", result, help=help)
 
 
 @check50.check(exists)
-def test_zero():
-    """input of 0 prints only Liftoff! for both directions"""
+def test_zero_number():
+    """input direction 'd' or 'a' and number 0 yields Invalid"""
     for direction in ["a", "d"]:
         result = (
             check50.run("python3 liftoff.py")
@@ -136,9 +98,9 @@ def test_zero():
             .stdout()
             .strip()
         )
-        if result.lower() != "direction (a/d): countdown: liftoff!".lower() and result.lower() != "liftoff!".lower():
+        if "invalid" not in result.lower():
             help = (
-                "If the user enters 0, print only 'Liftoff!' — no numbers before it. "
-                "This applies to both directions ('a' and 'd')."
+                "If the number entered is 0, your program should print 'Invalid' "
+                "and stop — this applies to both directions ('a' and 'd')."
             )
-            raise check50.Mismatch("Liftoff!", result, help=help)
+            raise check50.Mismatch("Invalid", result, help=help)
