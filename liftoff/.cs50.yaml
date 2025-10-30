@@ -1,0 +1,8 @@
+submit50:
+  files: &submit50_files
+    - !exclude "*"
+    - !require liftoff.py
+  style: false
+
+check50:
+  files: *submit50_files
