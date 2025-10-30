@@ -16,6 +16,9 @@ def test_very_weak_password():
         .stdout()
         .strip()
     )
+    if "Score: 12" not in result:
+        help = "Make sure passwords less than 8 characters receive a score of 0."
+        raise check50.Mismatch("Score: 12", result, help=help)
     if "Strength: Very Weak" not in result:
         help = "Passwords shorter than 8 characters should be rated 'Very Weak'."
         raise check50.Mismatch("Strength: Very Weak", result, help=help)
