@@ -18,9 +18,8 @@ def test_weak_password():
     )
     if "Score: 22" not in result or "Strength: Weak" not in result:
         help = (
-            "Ensure you're adding points correctly: +len(password), "
-            "+1 per lowercase letter, +3 per digit. "
-            "moonbase123 should yield Score: 22, Strength: Weak."
+            "Be sure to add half the length of the password (len(password)//2) "
+            "and points per character: +2 uppercase, +1 lowercase, +3 digit, +4 special."
         )
         raise check50.Mismatch("Score: 22\nStrength: Weak", result, help=help)
 
@@ -36,8 +35,8 @@ def test_moderate_password():
     )
     if "Score: 35" not in result or "Strength: Moderate" not in result:
         help = (
-            "Make sure uppercase adds +2, digits +3, special characters +4. "
-            "Mars!2025 should yield Score: 35, Strength: Moderate."
+            "Be sure to add half the length of the password (len(password)//2) "
+            "and points per character: +2 uppercase, +1 lowercase, +3 digit, +4 special."
         )
         raise check50.Mismatch("Score: 35\nStrength: Moderate", result, help=help)
 
@@ -53,8 +52,8 @@ def test_strong_password():
     )
     if "Strength: Strong" not in result:
         help = (
-            "Check your score thresholds: 41–55 should be 'Strong'. "
-            "LaunchCode2025 should fall in that range."
+            "Be sure to add half the length of the password (len(password)//2) "
+            "and points per character: +2 uppercase, +1 lowercase, +3 digit, +4 special."
         )
         raise check50.Mismatch("Strength: Strong", result, help=help)
 
@@ -70,7 +69,7 @@ def test_very_strong_password():
     )
     if "Score: 60" not in result or "Strength: Very Strong" not in result:
         help = (
-            "Check that special characters (!, @, #, $, %, &, *) add +4. "
-            "M@r$Expl0r3r2025! should yield Score: 60, Strength: Very Strong."
+            "Be sure to add half the length of the password (len(password)//2) "
+            "and points per character: +2 uppercase, +1 lowercase, +3 digit, +4 special."
         )
         raise check50.Mismatch("Score: 60\nStrength: Very Strong", result, help=help)
