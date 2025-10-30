@@ -1,9 +1,4 @@
 import check50
-from re import escape
-
-# Adds case insensitivity for output matching
-case_insensitive_prefix = "(?i)"
-
 
 @check50.check()
 def exists():
@@ -14,7 +9,7 @@ def exists():
 @check50.check(exists)
 def test_countdown_down():
     """input direction 'd' and number 3 prints 3, 2, 1, and Liftoff!"""
-    expected = "Direction (a/d): Countdown: 3\n2\n1\nLiftoff!"
+    expected = "3\n2\n1\nLiftoff!"
     result = (
         check50.run("python3 liftoff.py")
         .stdin("d", prompt=True)
@@ -34,7 +29,7 @@ def test_countdown_down():
 @check50.check(exists)
 def test_countdown_up():
     """input direction 'a' and number 3 prints 1, 2, 3, and Liftoff!"""
-    expected = "Direction (a/d): Countdown: 1\n2\n3\nLiftoff!"
+    expected = "1\n2\n3\nLiftoff!"
     result = (
         check50.run("python3 liftoff.py")
         .stdin("a", prompt=True)
@@ -70,37 +65,21 @@ def test_invalid_direction():
 
 
 @check50.check(exists)
-def test_negative_number():
-    """input direction 'a' and number -3 yields Invalid"""
-    result = (
-        check50.run("python3 liftoff.py")
-        .stdin("a", prompt=True)
-        .stdin("-3", prompt=True)
-        .stdout()
-        .strip()
-    )
-    if "invalid" not in result.lower():
-        help = (
-            "If the number entered is less than or equal to 0, your program should "
-            "print 'Invalid' and stop — it should not attempt to count up or down."
-        )
-        raise check50.Mismatch("Invalid", result, help=help)
-
-
-@check50.check(exists)
-def test_zero_number():
-    """input direction 'd' or 'a' and number 0 yields Invalid"""
+def test_nonpositive_number():
+    """input number <= 0 yields Invalid"""
     for direction in ["a", "d"]:
-        result = (
-            check50.run("python3 liftoff.py")
-            .stdin(direction, prompt=True)
-            .stdin("0", prompt=True)
-            .stdout()
-            .strip()
-        )
-        if "invalid" not in result.lower():
-            help = (
-                "If the number entered is 0, your program should print 'Invalid' "
-                "and stop — this applies to both directions ('a' and 'd')."
+        for number in ["0", "-3"]:
+            result = (
+                check50.run("python3 liftoff.py")
+                .stdin(direction, prompt=True)
+                .stdin(number, prompt=True)
+                .stdout()
+                .strip()
             )
-            raise check50.Mismatch("Invalid", result, help=help)
+            if "invalid" not in result.lower():
+                help = (
+                    "If the number entered is less than or equal to 0, "
+                    "your program should print 'Invalid' and stop — "
+                    "no countdown should occur."
+                )
+                raise check50.Mismatch("Invalid", result, help=help)
