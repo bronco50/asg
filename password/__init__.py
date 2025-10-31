@@ -9,18 +9,18 @@ def exists():
 
 @check50.check(exists)
 def test_very_weak_password():
-    """'abc123' yields Very Weak"""
+    """'abc' yields Very Weak"""
     result = (
         check50.run("python3 password.py")
         .stdin("abc123", prompt=True)
         .stdout()
         .strip()
     )
-    if "Score: 0" not in result:
-        help = "Make sure passwords less than 8 characters receive a score of 0."
+    if "Score: 4" not in result:
+        help = "Make sure you are assigning the points correctly."
         raise check50.Mismatch("Score: 12", result, help=help)
     if "Strength: Very Weak" not in result:
-        help = "Passwords shorter than 8 characters should be rated 'Very Weak'."
+        help = "Make sure you are providing the appropriate rating."
         raise check50.Mismatch("Strength: Very Weak", result, help=help)
 
 
