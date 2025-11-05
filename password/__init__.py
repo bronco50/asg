@@ -9,16 +9,16 @@ def exists():
 
 @check50.check(exists)
 def test_very_weak_password():
-    """'abc' yields Very Weak"""
+    """'abc123' yields Very Weak"""
     result = (
         check50.run("python3 password.py")
         .stdin("abc123", prompt=True)
         .stdout()
         .strip()
     )
-    if "Score: 4" not in result:
+    if "Score: 15" not in result:
         help = "Make sure you are assigning the points correctly."
-        raise check50.Mismatch("Score: 4", result, help=help)
+        raise check50.Mismatch("Score: 15", result, help=help)
     if "Strength: Very Weak" not in result:
         help = "Make sure you are providing the appropriate rating."
         raise check50.Mismatch("Strength: Very Weak", result, help=help)
