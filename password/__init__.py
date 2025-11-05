@@ -18,32 +18,14 @@ def test_very_weak_password():
     )
     if "Score: 4" not in result:
         help = "Make sure you are assigning the points correctly."
-        raise check50.Mismatch("Score: 12", result, help=help)
+        raise check50.Mismatch("Score: 4", result, help=help)
     if "Strength: Very Weak" not in result:
         help = "Make sure you are providing the appropriate rating."
         raise check50.Mismatch("Strength: Very Weak", result, help=help)
 
-
-@check50.check(exists)
-def test_weak_password():
-    """'moonbase123' yields Score: 12 and Strength: Weak"""
-    result = (
-        check50.run("python3 password.py")
-        .stdin("moonbase", prompt=True)
-        .stdout()
-        .strip()
-    )
-    if "Score: 12" not in result:
-        help = "Make sure you are assigning the points correctly."
-        raise check50.Mismatch("Score: 12", result, help=help)
-    if "Strength: Weak" not in result:
-        help = "Make sure you are providing the appropriate rating."
-        raise check50.Mismatch("Strength: Weak", result, help=help)
-
-
 @check50.check(exists)
 def test_moderate_password():
-    """'Mars!2025' yields Score: 25 and Strength: Moderate"""
+    """'Mars!2025' yields Score: 25 and Strength: Weak"""
     result = (
         check50.run("python3 password.py")
         .stdin("Mars!2025", prompt=True)
@@ -53,14 +35,14 @@ def test_moderate_password():
     if "Score: 25" not in result:
         help = "Make sure you are assigning the points correctly."
         raise check50.Mismatch("Score: 25", result, help=help)
-    if "Strength: Moderate" not in result:
+    if "Strength: Weak" not in result:
         help = "Make sure you are providing the appropriate rating."
-        raise check50.Mismatch("Strength: Moderate", result, help=help)
+        raise check50.Mismatch("Strength: Weak", result, help=help)
 
 
 @check50.check(exists)
 def test_strong_password():
-    """'LaunchCode2025' yields Score: 31 and Strength: Strong"""
+    """'LaunchCode2025' yields Score: 31 and Strength: Moderate"""
     result = (
         check50.run("python3 password.py")
         .stdin("LaunchCode2025", prompt=True)
@@ -70,14 +52,14 @@ def test_strong_password():
     if "Score: 31" not in result:
         help = "Make sure you are assigning the points correctly."
         raise check50.Mismatch("Score: 31", result, help=help)
-    if "Strength: Strong" not in result:
+    if "Strength: Moderate" not in result:
         help = "Make sure you are providing the appropriate rating."
-        raise check50.Mismatch("Strength: Strong", result, help=help)
+        raise check50.Mismatch("Strength: Moderate", result, help=help)
 
 
 @check50.check(exists)
 def test_very_strong_password():
-    """'M@r$Expl0r3r2025!' yields Score: 48 and Strength: Very Strong"""
+    """'M@r$Expl0r3r2025!' yields Score: 48 and Strength: Strong"""
     result = (
         check50.run("python3 password.py")
         .stdin("M@r$Expl0r3r2025!", prompt=True)
@@ -87,6 +69,22 @@ def test_very_strong_password():
     if "Score: 48" not in result:
         help = "Make sure you are assigning the points correctly."
         raise check50.Mismatch("Score: 48", result, help=help)
+    if "Strength: Strong" not in result:
+        help = "Make sure you are providing the appropriate rating."
+        raise check50.Mismatch("Strength: Strong", result, help=help)
+
+@check50.check(exists)
+def test_very_strong_password():
+    """'M@r$Expl0r3r2025!1995' yields Score: 62 and Strength: Very Strong"""
+    result = (
+        check50.run("python3 password.py")
+        .stdin("M@r$Expl0r3r2025!1995", prompt=True)
+        .stdout()
+        .strip()
+    )
+    if "Score: 62" not in result:
+        help = "Make sure you are assigning the points correctly."
+        raise check50.Mismatch("Score: 62", result, help=help)
     if "Strength: Very Strong" not in result:
         help = "Make sure you are providing the appropriate rating."
         raise check50.Mismatch("Strength: Very Strong", result, help=help)
