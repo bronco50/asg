@@ -2,7 +2,8 @@ submit50:
   files: &submit50_files
     - !exclude "*"
     - !require brickoven.py
+    - !require receipt.py
   style: false
-  
+
 check50:
   files: *submit50_files
