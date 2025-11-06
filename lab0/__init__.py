@@ -6,9 +6,9 @@ from math import pi
 def load_reciept():
     """Helper to import reciept.py safely."""
     spec = importlib.util.spec_from_file_location("brickoven", "brickoven.py")
-    reciept = importlib.util.module_from_spec(spec)
+    brickoven = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(brickoven)
-    return reciept
+    return brickoven
 
 
 @check50.check()
