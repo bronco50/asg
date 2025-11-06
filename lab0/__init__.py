@@ -5,16 +5,16 @@ from math import pi
 
 def load_reciept():
     """Helper to import reciept.py safely."""
-    spec = importlib.util.spec_from_file_location("reciept", "reciept.py")
+    spec = importlib.util.spec_from_file_location("brickoven", "brickoven.py")
     reciept = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(reciept)
+    spec.loader.exec_module(brickoven)
     return reciept
 
 
 @check50.check()
 def exists():
     """reciept.py exists"""
-    check50.exists("reciept.py")
+    check50.exists("brickoven.py")
 
 
 # ======================
