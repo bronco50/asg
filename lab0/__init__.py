@@ -3,8 +3,8 @@ import importlib.util
 from math import pi
 
 
-def load_reciept():
-    """Helper to import reciept.py safely."""
+def load_brickoven():
+    """Helper to import brickoven.py safely."""
     spec = importlib.util.spec_from_file_location("brickoven", "brickoven.py")
     brickoven = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(brickoven)
@@ -13,7 +13,7 @@ def load_reciept():
 
 @check50.check()
 def exists():
-    """reciept.py exists"""
+    """brickoven.py exists"""
     check50.exists("brickoven.py")
 
 
@@ -24,9 +24,9 @@ def exists():
 @check50.check(exists)
 def test_calculate_pizzas_standard():
     """calculate_pizzas returns correct tuple for 10 guests"""
-    reciept = load_reciept()
+    brickoven = load_brickoven()
     expected = (1, 1, 0)
-    actual = reciept.calculate_pizzas(10)
+    actual = brickoven.calculate_pizzas(10)
 
     if actual != expected:
         help = None
@@ -40,14 +40,14 @@ def test_calculate_pizzas_standard():
 @check50.check(exists)
 def test_calculate_pizzas_edge():
     """calculate_pizzas handles small and large groups correctly"""
-    reciept = load_reciept()
+    brickoven = load_brickoven()
     expected_small = (0, 0, 1)
-    actual_small = reciept.calculate_pizzas(1)
+    actual_small = brickoven.calculate_pizzas(1)
     if actual_small != expected_small:
         raise check50.Mismatch(expected_small, actual_small, help="For 1 guest, return 1 small pizza only.")
 
     expected_large = (2, 0, 1)  # 15 guests → 2 large (14), 1 small (1 left)
-    actual_large = reciept.calculate_pizzas(15)
+    actual_large = brickoven.calculate_pizzas(15)
     if actual_large != expected_large:
         raise check50.Mismatch(expected_large, actual_large, help="Be sure to handle 15+ guests (two large pizzas feed 14).")
 
@@ -59,9 +59,9 @@ def test_calculate_pizzas_edge():
 @check50.check(exists)
 def test_serving_size_normal():
     """serving_size returns correct total area for 1 of each size"""
-    reciept = load_reciept()
+    brickoven = load_brickoven()
     expected = pi * (10**2) + pi * (8**2) + pi * (6**2)
-    actual = reciept.serving_size(1, 1, 1)
+    actual = brickoven.serving_size(1, 1, 1)
     if abs(actual - expected) > 0.01:
         help = None
         if actual == 0:
@@ -74,9 +74,9 @@ def test_serving_size_normal():
 @check50.check(exists)
 def test_serving_size_zero():
     """serving_size returns 0 when no pizzas are ordered"""
-    reciept = load_reciept()
+    brickoven = load_brickoven()
     expected = 0
-    actual = reciept.serving_size(0, 0, 0)
+    actual = brickoven.serving_size(0, 0, 0)
     if actual != expected:
         raise check50.Mismatch(expected, actual, help="If all counts are 0, return 0 area.")
 
@@ -88,10 +88,10 @@ def test_serving_size_zero():
 @check50.check(exists)
 def test_apply_discount_standard():
     """apply_discount applies correct rate for 12 guests"""
-    reciept = load_reciept()
+    brickoven = load_brickoven()
     subtotal = 100.0
     expected = (90.0, 0.10)
-    actual = reciept.apply_discount(subtotal, 12)
+    actual = brickoven.apply_discount(subtotal, 12)
     if actual != expected:
         help = None
         if actual[1] == 0:
@@ -102,16 +102,16 @@ def test_apply_discount_standard():
 @check50.check(exists)
 def test_apply_discount_edge():
     """apply_discount applies correct rate for 16 guests and small group"""
-    reciept = load_reciept()
+    brickoven = load_brickoven()
     subtotal = 200.0
 
     expected_large = (170.0, 0.15)
-    actual_large = reciept.apply_discount(subtotal, 16)
+    actual_large = brickoven.apply_discount(subtotal, 16)
     if actual_large != expected_large:
         raise check50.Mismatch(expected_large, actual_large, help="15+ guests should get 15% off.")
 
     expected_small = (subtotal, 0.0)
-    actual_small = reciept.apply_discount(subtotal, 3)
+    actual_small = brickoven.apply_discount(subtotal, 3)
     if actual_small != expected_small:
         raise check50.Mismatch(expected_small, actual_small, help="Groups under 5 should not get any discount.")
 
@@ -123,13 +123,13 @@ def test_apply_discount_edge():
 @check50.check(exists)
 def test_calculate_cost_normal():
     """calculate_cost returns correct tax, tip, and total for 10% tip"""
-    reciept = load_reciept()
+    brickoven = load_brickoven()
     subtotal = 100.0
     expected_tax = subtotal * 0.1025
     expected_tip = subtotal * 0.10
     expected_total = subtotal + expected_tax + expected_tip
     expected = (round(expected_tax, 2), round(expected_tip, 2), round(expected_total, 2))
-    actual = reciept.calculate_cost(subtotal, 10.0)
+    actual = brickoven.calculate_cost(subtotal, 10.0)
 
     if not isinstance(actual, tuple) or len(actual) != 3 or any(abs(a - e) > 0.02 for a, e in zip(actual, expected)):
         help = "Tax = subtotal × 10.25%, Tip = subtotal × (tip% ÷ 100), Total = subtotal + tax + tip."
@@ -139,13 +139,13 @@ def test_calculate_cost_normal():
 @check50.check(exists)
 def test_calculate_cost_edge():
     """calculate_cost handles zero tip correctly"""
-    reciept = load_reciept()
+    brickoven = load_brickoven()
     subtotal = 50.0
     expected_tax = subtotal * 0.1025
     expected_tip = 0
     expected_total = subtotal + expected_tax
     expected = (round(expected_tax, 2), expected_tip, round(expected_total, 2))
-    actual = reciept.calculate_cost(subtotal, 0.0)
+    actual = brickoven.calculate_cost(subtotal, 0.0)
 
     if any(abs(a - e) > 0.02 for a, e in zip(actual, expected)):
         help = "Even with 0% tip, still include the 10.25% sales tax."
