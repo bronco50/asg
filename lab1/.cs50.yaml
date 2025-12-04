@@ -1,0 +1,9 @@
+submit50:
+  files: &submit50_files
+    - !exclude "*"
+    - !require wordle.py
+    - !require wordlist.txt
+  style: false
+
+check50:
+  files: *submit50_files
