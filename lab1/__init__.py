@@ -133,7 +133,7 @@ def test_feedback_mixed():
     wordle = load_wordle()
     feedback = wordle.give_feedback("crane", "cakes")
 
-    expected = "🟩⬜⬜🟨⬜"
+    expected = "🟩🟨⬜🟨⬜"
     if feedback != expected:
         raise check50.Mismatch(expected, feedback, help="Check letter position and presence logic.")
 
